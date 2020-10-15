@@ -31,7 +31,7 @@ public class GameHandler {
         channel.sendMessage(createEmbed(game)).queue(message -> {
             message.addReaction("\uD83C\uDFA4").queue();
             UtilHandler.addReactionsBasedOnParticipants(message, participants);
-            message.addReaction("❌").queue();
+            message.addReaction("\u274C").queue();
 
             activeGames.put(gameId, game);
 
@@ -46,7 +46,7 @@ public class GameHandler {
 
         String participants = "";
         for(Member member : game.getParticipants()) {
-            if(memberIsDead(game, member)) participants += "(💀) ";
+            if(memberIsDead(game, member)) participants += "(:skull:) ";
             participants += member.getEffectiveName() + " (" + member.getId() + ")";
             if(member.getId().equals(game.getHost().getId())) participants += " - Host";
             participants += "\n";
@@ -67,7 +67,6 @@ public class GameHandler {
                 "**ID: **" + game.getId().toString());
         DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
         Date result = new Date(System.currentTimeMillis());
-
         eb.setFooter("Runde startet: " + simple.format(result));
 
         return eb.build();
@@ -103,7 +102,6 @@ public class GameHandler {
         }
         dead.add(member);
         game.setDead(dead);
-
         member.mute(true).queue();
 
         editGameEmbed(game, channel, messageId);
@@ -113,7 +111,6 @@ public class GameHandler {
         if(memberIsDead(game, member)) {
             game.getDead().remove(member);
         }
-
         if(!game.isMuted()) {
             member.mute(false).queue();
         }

@@ -1,16 +1,17 @@
 package handlers;
 
 import model.Game;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.requests.RestAction;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class UtilHandler {
 
-    public static String[] emotes = {"0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"};
+    static JDA jda;
+
+    public static String[] emotes = {"U+0030 U+FE0F U+20E3", "U+0031 U+FE0F U+20E3", "U+0032 U+FE0F U+20E3", "U+0033 U+FE0F U+20E3", "U+0033 U+FE0F U+20E3",
+            "U+0034 U+FE0F U+20E3", "U+0035 U+FE0F U+20E3", "U+0036 U+FE0F U+20E3", "U+0037 U+FE0F U+20E3", "U+0038 U+FE0F U+20E3", "U+0039 U+FE0F U+20E3",};
 
     static public void addReactionsBasedOnParticipants(Message message, List<Member> members) {
         for (int i = 0; i < members.size(); i++) {
@@ -50,32 +51,14 @@ public class UtilHandler {
         return false;
     }
 
-    static public String getEmoteByString(String str) {
+    static public String getEmoteByString(String str, TextChannel channel) {
         String emote = "";
         if (str.equals("RE:U+1f3a4")) {
             emote = "mic";
         } else if (str.equals("RE:U+274c")) {
             emote = "stop";
-        } else if (str.equals("RE:U+30U+fe0fU+20e3")) {
-            emote = "0";
-        } else if (str.equals("RE:U+31U+fe0fU+20e3")) {
-            emote = "1";
-        } else if (str.equals("RE:U+32U+fe0fU+20e3")) {
-            emote = "2";
-        } else if (str.equals("RE:U+33U+fe0fU+20e3")) {
-            emote = "3";
-        } else if (str.equals("RE:U+34U+fe0fU+20e3")) {
-            emote = "4";
-        } else if (str.equals("RE:U+35U+fe0fU+20e3")) {
-            emote = "5";
-        } else if (str.equals("RE:U+36U+fe0fU+20e3")) {
-            emote = "6";
-        } else if (str.equals("RE:U+37U+fe0fU+20e3")) {
-            emote = "7";
-        } else if (str.equals("RE:U+38U+fe0fU+20e3")) {
-            emote = "8";
-        } else if (str.equals("RE:U+39U+fe0fU+20e3")) {
-            emote = "9";
+        } else if (str.startsWith("RE:U+3")){
+            emote = String.valueOf(str.charAt(6));
         }
 
         return emote;

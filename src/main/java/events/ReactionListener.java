@@ -28,40 +28,23 @@ public class ReactionListener extends ListenerAdapter {
         if(game != null) {
             if (event.getMember().equals(game.getHost())) {
                 String reactedTo = event.getReactionEmote().toString();
-                if (UtilHandler.getEmoteByString(reactedTo).equals("mic")) {
+                String emote = UtilHandler.getEmoteByString(reactedTo, channel);
+                if (emote.equals("mic")) {
                     if (!game.isMuted()) {
                         for (Member member : game.getParticipants()) {
                             member.mute(true).queue();
                         }
                         game.setMuted(true);
                     }
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("stop")) {
+                } else if (emote.equals("stop")) {
                     game.setEnded(true);
                     GameHandler.editGameEmbed(game, channel, messageId);
                     for (Member member : game.getParticipants()) {
                         member.mute(false).queue();
                     }
                     GameHandler.activeGames.remove(game.getId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("0")) {
-                    GameHandler.killMember(game, game.getParticipants().get(0), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("1")) {
-                    GameHandler.killMember(game, game.getParticipants().get(1), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("2")) {
-                    GameHandler.killMember(game, game.getParticipants().get(2), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("3")) {
-                    GameHandler.killMember(game, game.getParticipants().get(3), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("4")) {
-                    GameHandler.killMember(game, game.getParticipants().get(4), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("5")) {
-                    GameHandler.killMember(game, game.getParticipants().get(5), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("6")) {
-                    GameHandler.killMember(game, game.getParticipants().get(6), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("7")) {
-                    GameHandler.killMember(game, game.getParticipants().get(7), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("8")) {
-                    GameHandler.killMember(game, game.getParticipants().get(8), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("9")) {
-                    GameHandler.killMember(game, game.getParticipants().get(9), event.getTextChannel(), event.getMessageId());
+                } else {
+                    GameHandler.killMember(game,game.getParticipants().get(Integer.valueOf(emote)), channel, messageId);
                 }
             }
         }
@@ -83,7 +66,8 @@ public class ReactionListener extends ListenerAdapter {
         if(game != null) {
             if (event.getMember().equals(game.getHost())) {
                 String reactedTo = event.getReactionEmote().toString();
-                if (UtilHandler.getEmoteByString(reactedTo).equals("mic")) {
+                String emote = UtilHandler.getEmoteByString(reactedTo,channel);
+                if (emote.equals("mic")) {
                     if (game.isMuted()) {
                         for (Member member : game.getParticipants()) {
                             if (!GameHandler.memberIsDead(game, member)) {
@@ -92,26 +76,8 @@ public class ReactionListener extends ListenerAdapter {
                         }
                     }
                     game.setMuted(false);
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("0")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(0), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("1")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(1), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("2")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(2), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("3")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(3), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("4")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(4), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("5")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(5), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("6")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(6), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("7")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(7), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("8")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(8), event.getTextChannel(), event.getMessageId());
-                } else if (UtilHandler.getEmoteByString(reactedTo).equals("9")) {
-                    GameHandler.reviveMember(game, game.getParticipants().get(9), event.getTextChannel(), event.getMessageId());
+                } else {
+                    GameHandler.reviveMember(game,game.getParticipants().get(Integer.valueOf(emote)), channel, messageId);
                 }
             }
         }
